@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using UniversalChatRoom.Models;
 using System.Diagnostics;
 using UniversalChatRoom.Models;
 
@@ -21,6 +22,22 @@ namespace UniversalChatRoom.Controllers
         public IActionResult Privacy()
         {
             return View();
+        }
+
+        public IActionResult Public()
+        {
+            return View();
+        }
+
+        public IActionResult Test()
+        {
+            return View();
+        }
+
+        public IActionResult Chat(Message add)
+        {
+            //add message to database
+            return RedirectToAction("Public", "Home");
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
