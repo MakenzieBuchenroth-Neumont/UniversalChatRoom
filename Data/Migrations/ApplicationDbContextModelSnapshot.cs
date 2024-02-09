@@ -224,6 +224,55 @@ namespace UniversalChatRoom.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
+            modelBuilder.Entity("UniversalChatRoom.Models.Chatroom", b =>
+                {
+                    b.Property<int>("ID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ID"), 1L, 1);
+
+                    b.Property<string>("RoomName")
+                        .IsRequired()
+                        .HasMaxLength(25)
+                        .HasColumnType("nvarchar(25)");
+
+                    b.HasKey("ID");
+
+                    b.ToTable("Chatrooms");
+                });
+
+            modelBuilder.Entity("UniversalChatRoom.Models.ChatroomMessage", b =>
+                {
+                    b.Property<int>("ChatroomID")
+                        .HasColumnType("int");
+
+                    b.Property<int>("MessageID")
+                        .HasColumnType("int");
+
+                    b.HasKey("ChatroomID", "MessageID");
+
+                    b.HasIndex("MessageID");
+
+                    b.ToTable("ChatroomMessages");
+                });
+
+            modelBuilder.Entity("UniversalChatRoom.Models.ChatroomProfile", b =>
+                {
+                    b.Property<int>("ChatroomID")
+                        .HasColumnType("int");
+
+                    b.Property<string>("ProfileID")
+                        .HasMaxLength(450)
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("ChatroomID", "ProfileID");
+
+                    b.HasIndex("ProfileID");
+
+                    b.ToTable("ChatroomProfiles");
+                });
+
             modelBuilder.Entity("UniversalChatRoom.Models.Message", b =>
                 {
                     b.Property<int>("ID")
@@ -297,6 +346,44 @@ namespace UniversalChatRoom.Migrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+                });
+
+            modelBuilder.Entity("UniversalChatRoom.Models.ChatroomMessage", b =>
+                {
+                    b.HasOne("UniversalChatRoom.Models.Chatroom", "Chatroom")
+                        .WithMany()
+                        .HasForeignKey("ChatroomID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("UniversalChatRoom.Models.Message", "Message")
+                        .WithMany()
+                        .HasForeignKey("MessageID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Chatroom");
+
+                    b.Navigation("Message");
+                });
+
+            modelBuilder.Entity("UniversalChatRoom.Models.ChatroomProfile", b =>
+                {
+                    b.HasOne("UniversalChatRoom.Models.Chatroom", "Chatroom")
+                        .WithMany()
+                        .HasForeignKey("ChatroomID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser", "Profile")
+                        .WithMany()
+                        .HasForeignKey("ProfileID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Chatroom");
+
+                    b.Navigation("Profile");
                 });
 
             modelBuilder.Entity("UniversalChatRoom.Models.Message", b =>
