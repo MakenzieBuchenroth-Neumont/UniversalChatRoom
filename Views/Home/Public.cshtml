@@ -1,0 +1,22 @@
+﻿@model IEnumerable<Message>
+
+@*partial view on all messages imbeded*@
+@if (Model == null || Model.Count() == 0) {
+
+	<h2 class="text-danger">Could Not Connect to Database</h2>
+
+} else {
+	<div class="overflow-scroll vh-75">
+		@foreach (Message m in Model) {
+			<div class="row">
+				<div class="col-12">
+					<partial name="_partialMessageView.cshtml" for="@m" />
+				</div>
+			</div>
+		}
+	</div>
+}
+<form class="d-flex" asp-controller="Home" asp-action="Chat">
+	<input name="add" class="form-control" type="search" placeholder="type to chat" />
+	<button class="btn btn-secondary col-2" type="submit">Chat</button>
+</form>
