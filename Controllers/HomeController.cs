@@ -50,8 +50,6 @@ namespace UniversalChatRoom.Controllers
             m.ProfileID = dal.getProfile(User.FindFirstValue(ClaimTypes.NameIdentifier)).ID;
             dal.addMessage(m);
 
-            
-
             return RedirectToAction("Public", "Home");
         }
 
