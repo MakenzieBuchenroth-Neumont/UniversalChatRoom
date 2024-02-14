@@ -4,6 +4,7 @@ using UniversalChatRoom.Models;
 
 namespace UniversalChatRoom.Data {
 	public class ApplicationDbContext : IdentityDbContext {
+		public DbSet<Profile> Profiles {get; set;}
 		public DbSet<Message> Messages {get; set;}
 		public DbSet<Chatroom> Chatrooms {get; set;}
 		public DbSet<ChatroomMessage> ChatroomMessages {get; set;}
