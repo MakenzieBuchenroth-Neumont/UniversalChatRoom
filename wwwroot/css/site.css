@@ -14,7 +14,7 @@ html {
 }
 
 body {
-    margin-bottom: 60px;
+    margin-bottom: 60px;    
 }
 
 /* The side navigation menu */
@@ -70,4 +70,9 @@ body {
         .sidenav a {
             font-size: 18px;
         }
+}
+
+@font-face {
+    font-family: 'Cosmic Latin';
+    src: url('Fonts\cosmic-latin.ttf') format('truetype');
 }
