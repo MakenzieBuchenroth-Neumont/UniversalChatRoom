@@ -8,9 +8,9 @@ namespace UniversalChatRoom.Models {
 		[Required]
 		public virtual Chatroom Chatroom {get; set;}
 
-		[MaxLength(450), Required]
-		public string ProfileID {get; set;}
 		[Required]
-		public virtual IdentityUser Profile {get; set;}
+		public int ProfileID { get; set; }
+		[Required]
+		public virtual Profile Profile { get; set; }
 	}
 }

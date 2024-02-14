@@ -262,9 +262,8 @@ namespace UniversalChatRoom.Migrations
                     b.Property<int>("ChatroomID")
                         .HasColumnType("int");
 
-                    b.Property<string>("ProfileID")
-                        .HasMaxLength(450)
-                        .HasColumnType("nvarchar(450)");
+                    b.Property<int>("ProfileID")
+                        .HasColumnType("int");
 
                     b.HasKey("ChatroomID", "ProfileID");
 
@@ -286,15 +285,39 @@ namespace UniversalChatRoom.Migrations
                         .HasMaxLength(250)
                         .HasColumnType("nvarchar(250)");
 
-                    b.Property<string>("IdentityUserId")
+                    b.Property<int>("ProfileID")
+                        .HasColumnType("int");
+
+                    b.HasKey("ID");
+
+                    b.HasIndex("ProfileID");
+
+                    b.ToTable("Messages");
+                });
+
+            modelBuilder.Entity("UniversalChatRoom.Models.Profile", b =>
+                {
+                    b.Property<int>("ID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ID"), 1L, 1);
+
+                    b.Property<string>("Language")
                         .IsRequired()
+                        .HasMaxLength(5)
+                        .HasColumnType("nvarchar(5)");
+
+                    b.Property<string>("UserID")
+                        .IsRequired()
+                        .HasMaxLength(450)
                         .HasColumnType("nvarchar(450)");
 
                     b.HasKey("ID");
 
-                    b.HasIndex("IdentityUserId");
+                    b.HasIndex("UserID");
 
-                    b.ToTable("Messages");
+                    b.ToTable("Profile");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -375,7 +398,7 @@ namespace UniversalChatRoom.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser", "Profile")
+                    b.HasOne("UniversalChatRoom.Models.Profile", "Profile")
                         .WithMany()
                         .HasForeignKey("ProfileID")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -388,13 +411,24 @@ namespace UniversalChatRoom.Migrations
 
             modelBuilder.Entity("UniversalChatRoom.Models.Message", b =>
                 {
-                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser", "IdentityUser")
+                    b.HasOne("UniversalChatRoom.Models.Profile", "Profile")
                         .WithMany()
-                        .HasForeignKey("IdentityUserId")
+                        .HasForeignKey("ProfileID")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("IdentityUser");
+                    b.Navigation("Profile");
+                });
+
+            modelBuilder.Entity("UniversalChatRoom.Models.Profile", b =>
+                {
+                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser", "User")
+                        .WithMany()
+                        .HasForeignKey("UserID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("User");
                 });
 #pragma warning restore 612, 618
         }
