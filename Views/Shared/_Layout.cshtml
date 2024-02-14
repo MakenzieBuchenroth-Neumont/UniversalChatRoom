@@ -52,7 +52,15 @@
                     </svg>
                 </label>
                 <!--<button class="btn btn-primary" type="button" id="lightSwitch">Toggle Dark Mode</button>-->
-                <input class="form-check-input" type="checkbox" id="lightSwitch">Toggle Dark Mode</input>
+                <form action="@Url.Action("Language", "Home")" method="post" id="languageForm">
+                    <select id="languageDropdown" name="language">
+                        <option value="en">English</option>
+                        <option value="fr">French</option>
+                        <!-- Add more language options as needed -->
+                    </select>
+                    <input type="submit" value="Change Language">
+                </form>
+                <p style="color:white">@ViewBag.selectedLanguage</p>
             </div>
         </div>
         <div class="container">
@@ -71,6 +79,7 @@
         <script src="~/js/site.js" asp-append-version="true"></script>
         <script src="~/js/switch.js"></script>
         <script src="~/js/push.js"></script>
+        <script src="~/js/languageSelection.js"></script>
         @await RenderSectionAsync("Scripts", required: false)
     </div>
 </body>
