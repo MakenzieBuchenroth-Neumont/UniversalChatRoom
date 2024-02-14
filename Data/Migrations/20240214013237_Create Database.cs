@@ -168,20 +168,20 @@ namespace UniversalChatRoom.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Messages",
+                name: "Profile",
                 columns: table => new
                 {
                     ID = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    IdentityUserId = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    Contents = table.Column<string>(type: "nvarchar(250)", maxLength: 250, nullable: false)
+                    UserID = table.Column<string>(type: "nvarchar(450)", maxLength: 450, nullable: false),
+                    Language = table.Column<string>(type: "nvarchar(5)", maxLength: 5, nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Messages", x => x.ID);
+                    table.PrimaryKey("PK_Profile", x => x.ID);
                     table.ForeignKey(
-                        name: "FK_Messages_AspNetUsers_IdentityUserId",
-                        column: x => x.IdentityUserId,
+                        name: "FK_Profile_AspNetUsers_UserID",
+                        column: x => x.UserID,
                         principalTable: "AspNetUsers",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
@@ -192,21 +192,41 @@ namespace UniversalChatRoom.Migrations
                 columns: table => new
                 {
                     ChatroomID = table.Column<int>(type: "int", nullable: false),
-                    ProfileID = table.Column<string>(type: "nvarchar(450)", maxLength: 450, nullable: false)
+                    ProfileID = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_ChatroomProfiles", x => new { x.ChatroomID, x.ProfileID });
                     table.ForeignKey(
-                        name: "FK_ChatroomProfiles_AspNetUsers_ProfileID",
-                        column: x => x.ProfileID,
-                        principalTable: "AspNetUsers",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
                         name: "FK_ChatroomProfiles_Chatrooms_ChatroomID",
                         column: x => x.ChatroomID,
                         principalTable: "Chatrooms",
+                        principalColumn: "ID",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_ChatroomProfiles_Profile_ProfileID",
+                        column: x => x.ProfileID,
+                        principalTable: "Profile",
+                        principalColumn: "ID",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Messages",
+                columns: table => new
+                {
+                    ID = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    ProfileID = table.Column<int>(type: "int", nullable: false),
+                    Contents = table.Column<string>(type: "nvarchar(250)", maxLength: 250, nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Messages", x => x.ID);
+                    table.ForeignKey(
+                        name: "FK_Messages_Profile_ProfileID",
+                        column: x => x.ProfileID,
+                        principalTable: "Profile",
                         principalColumn: "ID",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -285,9 +305,14 @@ namespace UniversalChatRoom.Migrations
                 column: "ProfileID");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Messages_IdentityUserId",
+                name: "IX_Messages_ProfileID",
                 table: "Messages",
-                column: "IdentityUserId");
+                column: "ProfileID");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Profile_UserID",
+                table: "Profile",
+                column: "UserID");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -321,6 +346,9 @@ namespace UniversalChatRoom.Migrations
 
             migrationBuilder.DropTable(
                 name: "Chatrooms");
+
+            migrationBuilder.DropTable(
+                name: "Profile");
 
             migrationBuilder.DropTable(
                 name: "AspNetUsers");
