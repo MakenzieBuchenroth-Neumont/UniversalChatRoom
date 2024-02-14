@@ -8,6 +8,7 @@ namespace UniversalChatRoom.Controllers
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
+        TextTranslator tt = new TextTranslator();
 
         public HomeController(ILogger<HomeController> logger)
         {
@@ -31,7 +32,7 @@ namespace UniversalChatRoom.Controllers
 
         public IActionResult Test()
         {
-            return View();
+            return View(tt);
         }
 
         public IActionResult Chat(Message add)
