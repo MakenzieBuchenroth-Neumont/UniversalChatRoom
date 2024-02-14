@@ -25,7 +25,7 @@ namespace UniversalChatRoom.Models
             var translator = new Translator(authKey);
 
             // Translate text into a target language, in this case, French:
-            var translatedText = await translator.TranslateTextAsync(text, LanguageCode.English, LanguageCode.French);
+            var translatedText = await translator.TranslateTextAsync(text, LanguageCode.English, "fr");
             return translatedText.Text; // "Bonjour, le monde !"
             // Note: printing or converting the result to a string uses the output text.
         }
