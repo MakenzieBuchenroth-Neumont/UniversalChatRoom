@@ -18,6 +18,8 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.WebUtilities;
 using Microsoft.Extensions.Logging;
+using UniversalChatRoom.Data;
+using UniversalChatRoom.Models;
 
 namespace UniversalChatRoom.Areas.Identity.Pages.Account
 {
@@ -133,6 +135,10 @@ namespace UniversalChatRoom.Areas.Identity.Pages.Account
 
                     await _emailSender.SendEmailAsync(Input.Email, "Confirm your email",
                         $"Please confirm your account by <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>clicking here</a>.");
+
+                    var newProfile = new Profile();
+                    newProfile.UserID = userId;
+                    PublicDal.AddProfile(newProfile);
 
                     if (_userManager.Options.SignIn.RequireConfirmedAccount)
                     {
