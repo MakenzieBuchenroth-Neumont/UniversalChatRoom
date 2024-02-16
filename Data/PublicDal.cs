@@ -15,6 +15,11 @@ namespace UniversalChatRoom.Data {
 			db.SaveChanges();
 		}
 
+		public void addChatroomMessage(ChatroomMessage m) {
+			db.ChatroomMessages.Add(m);
+			db.SaveChanges();
+		}
+
 		public Profile getProfile(string id) {
 			return db.Profiles.Where(p => p.UserID == id).FirstOrDefault();
 		}
@@ -22,6 +27,11 @@ namespace UniversalChatRoom.Data {
 		public static void AddProfile(Profile profile) {
 			//db.Profiles.Add(profile);
 			//db.SaveChanges();
+		}
+
+		public void addChatRoom(Chatroom chatroom) {
+			db.Chatrooms.Add(chatroom);
+			db.SaveChanges();
 		}
 
 		public IEnumerable<Message> getMessages(Chatroom? chatroom) {

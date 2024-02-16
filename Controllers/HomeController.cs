@@ -15,6 +15,7 @@ namespace UniversalChatRoom.Controllers
         TextTranslator tt = new TextTranslator();
 		public HomeController(IDataAccessLayer indal) {
 			dal = indal;
+
 		}
 
         //public HomeController(ILogger<HomeController> logger)
@@ -54,9 +55,15 @@ namespace UniversalChatRoom.Controllers
             Message m = new Message();
             m.Contents = content;
             m.ProfileID = dal.getProfile(User.FindFirstValue(ClaimTypes.NameIdentifier)).ID;
+            ChatroomMessage chatroomMessage = new ChatroomMessage();
             dal.addMessage(m);
+			chatroomMessage.ChatroomID = 1;
+            chatroomMessage.MessageID = m.ID;
+            dal.addChatroomMessage(chatroomMessage);
 
-            return RedirectToAction("Public", "Home");
+
+
+			return RedirectToAction("Public", "Home");
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
