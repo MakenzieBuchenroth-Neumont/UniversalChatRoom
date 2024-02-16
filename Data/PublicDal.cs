@@ -18,9 +18,23 @@ namespace UniversalChatRoom.Data {
 			return db.Profiles.Where(p => p.UserID == id).FirstOrDefault();
 		}
 
-		public static void AddProfile(Profile profile) {
-			//db.Profiles.Add(profile);
-			//db.SaveChanges();
+		public void addProfile(Profile profile)
+		{
+			db.Profiles.Add(profile);
+			db.SaveChanges();
+		}
+
+		public bool doesUserHaveProfile(string id)
+		{
+			return (db.Profiles.Where(p => p.UserID == id).FirstOrDefault()) != null;
+		}
+
+		public void setProfileLanguage(string language, string id)
+		{
+			var prof = getProfile(id);
+			prof.Language = language;
+			db.Profiles.Update(prof);
+			db.SaveChanges();
 		}
 	}
 }
