@@ -1,3 +1,5 @@
 ﻿@model TextTranslator
 <h1>Hello</h1>
-<h3>@Model.newTextAsync("Translate this").Result</h3>
+@* Examples of how to do the auto translate to english, as well as the translate where you pass in the language *@
+<h3>@Model.newTextAsync("Traduire ceci. Translate this.").Result</h3>
+<h3>@Model.translateToPassedIn("Traduire ceci. Translate this.", "es").Result</h3>
