@@ -13,6 +13,12 @@ namespace UniversalChatRoom.Interfaces {
 
 		public void addChatRoom(Chatroom chatroom);
 		}
+		public void addProfile(Profile profile);
+
+		public bool doesUserHaveProfile(string id);
+
+		public void setProfileLanguage(string language, string id);
+	}
 }
 
 

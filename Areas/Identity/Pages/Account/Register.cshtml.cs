@@ -136,10 +136,6 @@ namespace UniversalChatRoom.Areas.Identity.Pages.Account
                     await _emailSender.SendEmailAsync(Input.Email, "Confirm your email",
                         $"Please confirm your account by <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>clicking here</a>.");
 
-                    var newProfile = new Profile();
-                    newProfile.UserID = userId;
-                    PublicDal.AddProfile(newProfile);
-
                     if (_userManager.Options.SignIn.RequireConfirmedAccount)
                     {
                         return RedirectToPage("RegisterConfirmation", new { email = Input.Email, returnUrl = returnUrl });
@@ -147,7 +143,8 @@ namespace UniversalChatRoom.Areas.Identity.Pages.Account
                     else
                     {
                         await _signInManager.SignInAsync(user, isPersistent: false);
-                        return LocalRedirect(returnUrl);
+                        //return LocalRedirect(returnUrl);
+                        return RedirectToAction("SecondRegister", "Home");
                     }
                 }
                 foreach (var error in result.Errors)
