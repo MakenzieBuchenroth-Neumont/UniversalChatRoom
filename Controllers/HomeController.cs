@@ -22,6 +22,12 @@ namespace UniversalChatRoom.Controllers
             //_logger = logger;
         //}
 
+        [HttpPost]
+        public IActionResult Language(string language) {
+            ViewBag.selectedLanguage = language;
+            return RedirectToAction("Public");
+        }
+
         public IActionResult Index()
         {
             return View();
