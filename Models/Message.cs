@@ -16,9 +16,5 @@ namespace UniversalChatRoom.Models {
 
 		[MaxLength(250), Required]
 		public string Contents {get; set;}
-
-        public TextTranslator tt = new TextTranslator();
-
-        public bool IsTranslated { get; set; } = true;
 	}
 }
