@@ -3,3 +3,27 @@
 *@
 @{
 }
+@model Message
+@* @translator TextTranslator *@
+
+@if (Model == null)
+{
+    <h2>No game provided</h2>
+}
+else
+{
+    if (Model.IsTranslated)
+    {
+        <h3>@Model.Profile.User.UserName</h3>
+        <h3>Original Language @Model.Profile.Language</h3>
+        <h3>@Model.tt.translateToPassedIn(Model.Contents, Model.Profile.Language).Result</h3>
+    }
+    else
+    {
+        <h3>@Model.Profile.User.UserName</h3>
+        <h3>Original Language @Model.Profile.Language</h3>
+        <h3>@Model.Contents</h3>
+    }
+}
+
+
