@@ -1,4 +1,5 @@
-﻿using UniversalChatRoom.Interfaces;
+﻿using Humanizer.Localisation;
+using UniversalChatRoom.Interfaces;
 using UniversalChatRoom.Models;
 
 namespace UniversalChatRoom.Data {
@@ -35,6 +36,22 @@ namespace UniversalChatRoom.Data {
 			prof.Language = language;
 			db.Profiles.Update(prof);
 			db.SaveChanges();
+		}
+
+		public IEnumerable<Message> getMessages(Chatroom? chatroom) {
+			if (chatroom == null) {
+				chatroom = db.Chatrooms.First();
+			}
+			IEnumerable<ChatroomMessage> messagesinChat = db.ChatroomMessages.Where(m => m.ChatroomID == chatroom.ID ).ToList();
+			List<Message> messages = new List<Message>();
+			foreach (ChatroomMessage message in messagesinChat) {
+				messages.Add(db.Messages.Where(m => m.ID == message.MessageID).First());	
+			}
+
+			//sort message by date.
+
+			return messages;
+
 		}
 	}
 }
