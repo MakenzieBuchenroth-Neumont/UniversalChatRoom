@@ -12,8 +12,8 @@ using UniversalChatRoom.Data;
 namespace UniversalChatRoom.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20240214013237_Create Database")]
-    partial class CreateDatabase
+    [Migration("20240216015600_Initial")]
+    partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -319,7 +319,7 @@ namespace UniversalChatRoom.Migrations
 
                     b.HasIndex("UserID");
 
-                    b.ToTable("Profile");
+                    b.ToTable("Profiles");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>

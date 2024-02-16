@@ -21,7 +21,7 @@ namespace UniversalChatRoom.Data {
 		}
 
 		public Profile getProfile(string id) {
-			return db.Profiles.Where(p => p.UserID == id).FirstOrDefault();
+			return db.Profiles.Where(p => p.UserID == id).First();
 		}
 
 		public void addProfile(Profile profile)

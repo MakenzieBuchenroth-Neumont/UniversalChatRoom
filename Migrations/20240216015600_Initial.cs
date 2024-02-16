@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace UniversalChatRoom.Migrations
 {
-    public partial class CreateDatabase : Migration
+    public partial class Initial : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -168,7 +168,7 @@ namespace UniversalChatRoom.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Profile",
+                name: "Profiles",
                 columns: table => new
                 {
                     ID = table.Column<int>(type: "int", nullable: false)
@@ -178,9 +178,9 @@ namespace UniversalChatRoom.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Profile", x => x.ID);
+                    table.PrimaryKey("PK_Profiles", x => x.ID);
                     table.ForeignKey(
-                        name: "FK_Profile_AspNetUsers_UserID",
+                        name: "FK_Profiles_AspNetUsers_UserID",
                         column: x => x.UserID,
                         principalTable: "AspNetUsers",
                         principalColumn: "Id",
@@ -204,9 +204,9 @@ namespace UniversalChatRoom.Migrations
                         principalColumn: "ID",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_ChatroomProfiles_Profile_ProfileID",
+                        name: "FK_ChatroomProfiles_Profiles_ProfileID",
                         column: x => x.ProfileID,
-                        principalTable: "Profile",
+                        principalTable: "Profiles",
                         principalColumn: "ID",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -224,9 +224,9 @@ namespace UniversalChatRoom.Migrations
                 {
                     table.PrimaryKey("PK_Messages", x => x.ID);
                     table.ForeignKey(
-                        name: "FK_Messages_Profile_ProfileID",
+                        name: "FK_Messages_Profiles_ProfileID",
                         column: x => x.ProfileID,
-                        principalTable: "Profile",
+                        principalTable: "Profiles",
                         principalColumn: "ID",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -310,8 +310,8 @@ namespace UniversalChatRoom.Migrations
                 column: "ProfileID");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Profile_UserID",
-                table: "Profile",
+                name: "IX_Profiles_UserID",
+                table: "Profiles",
                 column: "UserID");
         }
 
@@ -348,7 +348,7 @@ namespace UniversalChatRoom.Migrations
                 name: "Chatrooms");
 
             migrationBuilder.DropTable(
-                name: "Profile");
+                name: "Profiles");
 
             migrationBuilder.DropTable(
                 name: "AspNetUsers");
