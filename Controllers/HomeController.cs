@@ -10,9 +10,10 @@ namespace UniversalChatRoom.Controllers
 {
     public class HomeController : Controller
     {
+        private readonly ILogger<HomeController> _logger;
+        TextTranslator tt = new TextTranslator(); // this needs to be passed into any view that uses the translator
         IDataAccessLayer dal;
         //private readonly ILogger<HomeController> _logger;
-        TextTranslator tt = new TextTranslator();
 		public HomeController(IDataAccessLayer indal) {
 			dal = indal;
 
