@@ -2,6 +2,9 @@
 using UniversalChatRoom.Models;
 using System.Diagnostics;
 using UniversalChatRoom.Models;
+using UniversalChatRoom.Interfaces;
+using UniversalChatRoom.Data;
+using System.Security.Claims;
 
 namespace UniversalChatRoom.Controllers
 {
@@ -9,11 +12,16 @@ namespace UniversalChatRoom.Controllers
     {
         private readonly ILogger<HomeController> _logger;
         TextTranslator tt = new TextTranslator(); // this needs to be passed into any view that uses the translator
+        IDataAccessLayer dal;
+        //private readonly ILogger<HomeController> _logger;
+		public HomeController(IDataAccessLayer indal) {
+			dal = indal;
+		}
 
-        public HomeController(ILogger<HomeController> logger)
-        {
-            _logger = logger;
-        }
+        //public HomeController(ILogger<HomeController> logger)
+        //{
+            //_logger = logger;
+        //}
 
         public IActionResult Index()
         {
@@ -35,9 +43,14 @@ namespace UniversalChatRoom.Controllers
             return View(tt);
         }
 
-        public IActionResult Chat(Message add)
+        public IActionResult Chat(string content)
         {
             //add message to database
+            Message m = new Message();
+            m.Contents = content;
+            m.ProfileID = dal.getProfile(User.FindFirstValue(ClaimTypes.NameIdentifier)).ID;
+            dal.addMessage(m);
+
             return RedirectToAction("Public", "Home");
         }
 
