@@ -1,17 +1,20 @@
-﻿@model IEnumerable<Message>
+﻿@model Tuple<IEnumerable<Message>, TextTranslator , Profile>
 
 @*partial view on all messages imbeded*@
-@if (Model == null || Model.Count() == 0) {
+@if (Model == null || Model.Item1.Count() == 0) {
 
 	<h2 class="text-danger">Could Not Connect to Database</h2>
 
 } else {
 	<div class="overflow-scroll vh-75">
-		@foreach (Message m in Model) {
+		@foreach (Message m in Model.Item1) {
 			<div class="row">
-				<div class="col-12">
-					<partial name="_partialMessageView.cshtml" for="@m" />
-				</div>
+				@{
+					var value = Tuple.Create(m, Model.Item2, Model.Item3);
+					<div class="col-12">
+						<partial name="_partialMessageView.cshtml" for="@value" />
+					</div>
+				}
 			</div>
 		}
 	</div>
