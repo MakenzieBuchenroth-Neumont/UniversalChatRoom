@@ -26,8 +26,9 @@ namespace UniversalChatRoom.Controllers
 
         [HttpPost]
         public IActionResult Language(string language) {
-            ViewBag.selectedLanguage = language;
-            return RedirectToAction("Public");
+			//ViewBag.selectedLanguage = language;
+			dal.setProfileLanguage(language, User.FindFirstValue(ClaimTypes.NameIdentifier));
+			return RedirectToAction("Public");
         }
 
         public IActionResult Index()

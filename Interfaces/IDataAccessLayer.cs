@@ -12,7 +12,7 @@ namespace UniversalChatRoom.Interfaces {
 		public IEnumerable<Message> getMessages(Chatroom? chatroom);
 
 		public void addChatRoom(Chatroom chatroom);
-		}
+		
 		public void addProfile(Profile profile);
 
 		public bool doesUserHaveProfile(string id);
