@@ -1,17 +1,17 @@
 ﻿@using Microsoft.AspNetCore.Identity;
-@model Tuple<IEnumerable<Message>, TextTranslator, IdentityUser>
+@model (IEnumerable<Message> messages, TextTranslator tt, IdentityUser user, Profile prof)
 
 @*partial view on all messages imbeded*@
-@if (Model == null || Model.Item1.Count() == 0) {
+@if (Model.messages.Count() == 0) {
 
 	<h2 class="text-danger">Could Not Connect to Database</h2>
 
 } else {
 	<div class="overflow-scroll vh-75">
-		@foreach (Message m in Model.Item1) {
+		@foreach(Message m in Model.messages) {
 			<div class="row">
 				@{
-					var value = Tuple.Create(m, Model.Item2, Model.Item3);
+					var value = (m, Model.tt, Model.user, Model.prof);
 					<div class="col-12">
 						<partial name="_partialMessageView.cshtml" for="@value" />
 					</div>

@@ -19,6 +19,8 @@ namespace UniversalChatRoom.Interfaces {
 
 		public IdentityUser getUserFromProfile(Profile profile);
 
+		public Profile getProfileFromUser(IdentityUser user);
+
 		public bool doesUserHaveProfile(string id);
 
 		public void setProfileLanguage(string language, string id);

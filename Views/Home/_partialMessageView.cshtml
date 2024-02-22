@@ -1,29 +1,27 @@
 ﻿@using Microsoft.AspNetCore.Identity;
-@model (Message message,TextTranslator tt, IdentityUser user, Profile prof)
+@model (Message message, TextTranslator tt, IdentityUser user, Profile prof)
+
 @{
     //
 }
 
-@* @model Message *@
-@* @translator TextTranslator *@
-
-@if (Model.Item1 == null)
+@if (Model.message == null)
 {
     <h2>No message provided</h2>
 }
 else
 {
-    if (Model.Item2 != null)
+    if (Model.tt != null)
     {
         <h3>@Model.user.UserName</h3>
-        <h3>Original Language @Model.Item1.Profile.Language</h3>
-        <h3>@Model.Item2.translateToPassedIn(Model.Item1.Contents, Model.Item1.Profile.Language).Result</h3>
+        <h3>Original Language @Model.prof.Language</h3>
+        <h3>@Model.tt.translateToPassedIn(Model.message.Contents, Model.prof.Language).Result</h3>
     }
     else
     {
-        <h3>@Model.Item3.UserName</h3>
-        <h3>Original Language @Model.Item1.Profile.Language</h3>
-        <h3>@Model.Item1.Contents</h3>
+        <h3>@Model.user.UserName</h3>
+        <h3>Original Language @Model.prof.Language</h3>
+        <h3>@Model.message.Contents</h3>
     }
 }
 

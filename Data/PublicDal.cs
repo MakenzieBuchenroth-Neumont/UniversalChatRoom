@@ -46,7 +46,12 @@ namespace UniversalChatRoom.Data {
 			return db.Users.Where(u => u.Id == profile.UserID).First();
 		}
 
-        public bool doesUserHaveProfile(string id)
+		public Profile getProfileFromUser(IdentityUser user)
+		{
+			return db.Profiles.Where(p => p.UserID == user.Id).First();
+		}
+
+		public bool doesUserHaveProfile(string id)
 		{
 			return (db.Profiles.Where(p => p.UserID == id).FirstOrDefault()) != null;
 		}

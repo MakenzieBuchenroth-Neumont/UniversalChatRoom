@@ -43,7 +43,7 @@ namespace UniversalChatRoom.Controllers
 
         public IActionResult Public()
         {
-            return View(Tuple.Create(dal.getMessages(null), tt, dal.getUser(User.FindFirstValue(ClaimTypes.NameIdentifier))));
+            return View((dal.getMessages(null), tt, dal.getUser(GetCurrentUserID()), dal.getProfileFromUser(dal.getUser(GetCurrentUserID()))));
         }
 
         public IActionResult Test()
@@ -73,5 +73,9 @@ namespace UniversalChatRoom.Controllers
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
+
+        private string GetCurrentUserID() {
+            return User.FindFirstValue(ClaimTypes.NameIdentifier);
+		}
     }
 }
