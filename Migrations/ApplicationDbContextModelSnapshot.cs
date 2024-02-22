@@ -285,12 +285,11 @@ namespace UniversalChatRoom.Migrations
                         .HasMaxLength(250)
                         .HasColumnType("nvarchar(250)");
 
-                    b.Property<int>("ProfileID")
-                        .HasColumnType("int");
+                    b.Property<string>("username")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("ID");
-
-                    b.HasIndex("ProfileID");
 
                     b.ToTable("Messages");
                 });
@@ -405,17 +404,6 @@ namespace UniversalChatRoom.Migrations
                         .IsRequired();
 
                     b.Navigation("Chatroom");
-
-                    b.Navigation("Profile");
-                });
-
-            modelBuilder.Entity("UniversalChatRoom.Models.Message", b =>
-                {
-                    b.HasOne("UniversalChatRoom.Models.Profile", "Profile")
-                        .WithMany()
-                        .HasForeignKey("ProfileID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
 
                     b.Navigation("Profile");
                 });

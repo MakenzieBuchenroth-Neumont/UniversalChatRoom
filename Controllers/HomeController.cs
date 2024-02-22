@@ -57,8 +57,10 @@ namespace UniversalChatRoom.Controllers
             //add message to database
             Message m = new Message();
             m.Contents = content;
-            m.ProfileID = dal.getProfile(User.FindFirstValue(ClaimTypes.NameIdentifier)).ID;
-            ChatroomMessage chatroomMessage = new ChatroomMessage();
+            m.username = User.FindFirstValue(ClaimTypes.Name);
+            m.language = dal.getProfile(User.FindFirstValue(ClaimTypes.NameIdentifier)).Language;
+
+			ChatroomMessage chatroomMessage = new ChatroomMessage();
             dal.addMessage(m);
 			chatroomMessage.ChatroomID = 1;
             chatroomMessage.MessageID = m.ID;
