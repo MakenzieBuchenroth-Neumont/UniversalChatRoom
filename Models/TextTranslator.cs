@@ -22,7 +22,7 @@ namespace UniversalChatRoom.Models
             // and only changing the translated words.
             return translatedText.Text;
             // returns the original text after translated. anything it cant translate will just be sent back how it originally was.
-
+			
         }
         
 		// this is to do one where you pass in the language
