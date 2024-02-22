@@ -17,6 +17,12 @@ body {
     margin-bottom: 60px;    
 }
 
+.ogLanguage {
+    color: GrayText;
+}
+
+
+
 /* The side navigation menu */
 .sidenav {
     height: 100%; /* 100% Full-height */
