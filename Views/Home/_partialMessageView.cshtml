@@ -13,7 +13,7 @@ else
 {
     if (Model.tt != null)
     {
-        <h3>@Model.user.UserName</h3>
+        <h3>@Model.message.username</h3>
         <h3>Original Language @Model.prof.Language</h3>
         <h3>@Model.tt.translateToPassedIn(Model.message.Contents, Model.prof.Language).Result</h3>
     }

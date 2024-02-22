@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace UniversalChatRoom.Migrations
 {
-    public partial class Initial : Migration
+    public partial class initial : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -59,6 +59,20 @@ namespace UniversalChatRoom.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Chatrooms", x => x.ID);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Messages",
+                columns: table => new
+                {
+                    ID = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    username = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Contents = table.Column<string>(type: "nvarchar(250)", maxLength: 250, nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Messages", x => x.ID);
                 });
 
             migrationBuilder.CreateTable(
@@ -188,50 +202,6 @@ namespace UniversalChatRoom.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "ChatroomProfiles",
-                columns: table => new
-                {
-                    ChatroomID = table.Column<int>(type: "int", nullable: false),
-                    ProfileID = table.Column<int>(type: "int", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_ChatroomProfiles", x => new { x.ChatroomID, x.ProfileID });
-                    table.ForeignKey(
-                        name: "FK_ChatroomProfiles_Chatrooms_ChatroomID",
-                        column: x => x.ChatroomID,
-                        principalTable: "Chatrooms",
-                        principalColumn: "ID",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_ChatroomProfiles_Profiles_ProfileID",
-                        column: x => x.ProfileID,
-                        principalTable: "Profiles",
-                        principalColumn: "ID",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Messages",
-                columns: table => new
-                {
-                    ID = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    ProfileID = table.Column<int>(type: "int", nullable: false),
-                    Contents = table.Column<string>(type: "nvarchar(250)", maxLength: 250, nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Messages", x => x.ID);
-                    table.ForeignKey(
-                        name: "FK_Messages_Profiles_ProfileID",
-                        column: x => x.ProfileID,
-                        principalTable: "Profiles",
-                        principalColumn: "ID",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "ChatroomMessages",
                 columns: table => new
                 {
@@ -251,6 +221,30 @@ namespace UniversalChatRoom.Migrations
                         name: "FK_ChatroomMessages_Messages_MessageID",
                         column: x => x.MessageID,
                         principalTable: "Messages",
+                        principalColumn: "ID",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "ChatroomProfiles",
+                columns: table => new
+                {
+                    ChatroomID = table.Column<int>(type: "int", nullable: false),
+                    ProfileID = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_ChatroomProfiles", x => new { x.ChatroomID, x.ProfileID });
+                    table.ForeignKey(
+                        name: "FK_ChatroomProfiles_Chatrooms_ChatroomID",
+                        column: x => x.ChatroomID,
+                        principalTable: "Chatrooms",
+                        principalColumn: "ID",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_ChatroomProfiles_Profiles_ProfileID",
+                        column: x => x.ProfileID,
+                        principalTable: "Profiles",
                         principalColumn: "ID",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -302,11 +296,6 @@ namespace UniversalChatRoom.Migrations
             migrationBuilder.CreateIndex(
                 name: "IX_ChatroomProfiles_ProfileID",
                 table: "ChatroomProfiles",
-                column: "ProfileID");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Messages_ProfileID",
-                table: "Messages",
                 column: "ProfileID");
 
             migrationBuilder.CreateIndex(
