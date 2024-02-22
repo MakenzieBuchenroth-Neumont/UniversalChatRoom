@@ -5,6 +5,7 @@ using UniversalChatRoom.Models;
 using UniversalChatRoom.Interfaces;
 using UniversalChatRoom.Data;
 using System.Security.Claims;
+using DeepL;
 
 namespace UniversalChatRoom.Controllers
 {
@@ -66,6 +67,18 @@ namespace UniversalChatRoom.Controllers
 
 
 			return RedirectToAction("Public", "Home");
+        }
+
+
+        public IActionResult SecondRegister() {
+            if(!dal.doesUserHaveProfile(User.FindFirstValue(ClaimTypes.NameIdentifier))) {
+                Profile profile = new Profile();
+                profile.UserID = User.FindFirstValue(ClaimTypes.NameIdentifier);
+                profile.Language = LanguageCode.English;
+                dal.addProfile(profile);
+            }
+
+            return View();
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
