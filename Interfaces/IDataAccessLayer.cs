@@ -1,4 +1,4 @@
-﻿
+﻿using Microsoft.AspNetCore.Identity;
 using UniversalChatRoom.Models;
 
 namespace UniversalChatRoom.Interfaces {
@@ -7,6 +7,8 @@ namespace UniversalChatRoom.Interfaces {
 
 		public Profile getProfile(string id);
 
+		public IdentityUser getUser(string id);
+
 		public void addChatroomMessage(ChatroomMessage m);
 
 		public IEnumerable<Message> getMessages(Chatroom? chatroom);
@@ -14,6 +16,8 @@ namespace UniversalChatRoom.Interfaces {
 		public void addChatRoom(Chatroom chatroom);
 		
 		public void addProfile(Profile profile);
+
+		public IdentityUser getUserFromProfile(Profile profile);
 
 		public bool doesUserHaveProfile(string id);
 

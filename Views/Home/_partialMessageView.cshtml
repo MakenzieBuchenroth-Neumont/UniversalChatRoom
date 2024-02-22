@@ -1,9 +1,9 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
+﻿@using Microsoft.AspNetCore.Identity;
+@model (Message message,TextTranslator tt, IdentityUser user, Profile prof)
 @{
+    //
 }
-@model Tuple<Message,TextTranslator, Profile>
+
 @* @model Message *@
 @* @translator TextTranslator *@
 
@@ -15,13 +15,13 @@ else
 {
     if (Model.Item2 != null)
     {
-        <h3>@Model.Item1.Profile.User.UserName</h3>
+        <h3>@Model.user.UserName</h3>
         <h3>Original Language @Model.Item1.Profile.Language</h3>
         <h3>@Model.Item2.translateToPassedIn(Model.Item1.Contents, Model.Item1.Profile.Language).Result</h3>
     }
     else
     {
-        <h3>@Model.Item1.Profile.User.UserName</h3>
+        <h3>@Model.Item3.UserName</h3>
         <h3>Original Language @Model.Item1.Profile.Language</h3>
         <h3>@Model.Item1.Contents</h3>
     }

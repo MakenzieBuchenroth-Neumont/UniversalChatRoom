@@ -1,4 +1,5 @@
 ﻿using Humanizer.Localisation;
+using Microsoft.AspNetCore.Identity;
 using UniversalChatRoom.Interfaces;
 using UniversalChatRoom.Models;
 
@@ -8,6 +9,11 @@ namespace UniversalChatRoom.Data {
 
 		public PublicDal(ApplicationDbContext indb) {
 			db = indb;
+
+			//Chatroom chat = new Chatroom();
+			//chat.RoomName = "Public";
+			//db.Chatrooms.Add(chat);
+			//db.SaveChanges();
 		}
 
 		public void addMessage(Message m) {
@@ -24,13 +30,23 @@ namespace UniversalChatRoom.Data {
 			return db.Profiles.Where(p => p.UserID == id).First();
 		}
 
-		public void addProfile(Profile profile)
+        public IdentityUser getUser(string id)
+		{
+			return db.Users.Where(u => u.Id == id).First();
+		}
+
+        public void addProfile(Profile profile)
 		{
 			db.Profiles.Add(profile);
 			db.SaveChanges();
 		}
 
-		public bool doesUserHaveProfile(string id)
+        public IdentityUser getUserFromProfile(Profile profile)
+		{
+			return db.Users.Where(u => u.Id == profile.UserID).First();
+		}
+
+        public bool doesUserHaveProfile(string id)
 		{
 			return (db.Profiles.Where(p => p.UserID == id).FirstOrDefault()) != null;
 		}

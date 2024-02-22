@@ -43,7 +43,7 @@ namespace UniversalChatRoom.Controllers
 
         public IActionResult Public()
         {
-            return View(dal.getMessages(null));
+            return View(Tuple.Create(dal.getMessages(null), tt, dal.getUser(User.FindFirstValue(ClaimTypes.NameIdentifier))));
         }
 
         public IActionResult Test()
