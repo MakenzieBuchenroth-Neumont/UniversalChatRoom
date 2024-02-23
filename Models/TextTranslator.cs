@@ -26,7 +26,7 @@ namespace UniversalChatRoom.Models
         }
         
 		// this is to do one where you pass in the language
-		public async Task<string> translateToPassedIn(string? text, string languageCode)
+		public async Task<string> translateToPassedIn(string? text, string? sourceCode, string languageCode)
 		{
 			if (string.IsNullOrEmpty(text)) return "";
 			if (string.IsNullOrEmpty(languageCode)) return "";
@@ -34,13 +34,17 @@ namespace UniversalChatRoom.Models
 			// try catch because that means it will catch if the language passed in isn't correct, returns the original text if language dont work
 			try
 			{
-				var translatedText = await translator.TranslateTextAsync(text, null, languageCode, new TextTranslateOptions { PreserveFormatting = true });
+				var translatedText = await translator.TranslateTextAsync(text, sourceCode, languageCode, new TextTranslateOptions { PreserveFormatting = true });
 				return translatedText.Text;
 			}
 			catch (Exception e)
 			{
 				return text;
 			}
+		}
+
+		public async Task<string> translateToPassedIn(string? text, string languageCode) {
+			return await translateToPassedIn(text, null, languageCode);
 		}
 	}
 }
