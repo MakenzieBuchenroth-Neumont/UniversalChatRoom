@@ -2,12 +2,12 @@
 @model (Message message, TextTranslator tt, IdentityUser user, Profile prof)
 
 @{
-    //
+	//
 }
 
 @if (Model.message == null)
 {
-    <h2>No message provided</h2>
+	<h2>No message provided</h2>
 }
 else
 {
@@ -25,6 +25,27 @@ else
         <h3>@Model.user.UserName</h3><h3 class="ogLanguage">Original Language @Model.prof.Language</h3><br />
         <h3>@Model.message.Contents</h3>
     }
+	if (Model.tt != null)
+	{
+		<div style="clear: both">
+			@if(Model.message.username == Model.user.UserName) {
+				<h3 style="float: left">@Model.message.username</h3>
+			} else {
+				@* <h3 style="float: left"><a asp-controller="Home" asp-action="DM">@Model.message.username</a></h3> *@
+				<form asp-controller="Home" asp-action="DM" method="post">
+					<button type="submit" class="">@Model.message.username</button>
+				</form>
+			}
+			<h4 style="display: inline-block" class="ogLanguage">  Original Language @Model.message.language</h4>
+			</div>
+		<br />
+		<h3>@Model.tt.translateToPassedIn(Model.message.Contents, Model.prof.Language).Result</h3>
+	}
+	else
+	{
+		<h3>@Model.message.username</h3><h3 class="ogLanguage">Original Language @Model.prof.Language</h3><br />
+		<h3>@Model.message.Contents</h3>
+	}
 }
 
 
