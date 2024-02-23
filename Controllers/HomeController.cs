@@ -6,6 +6,7 @@ using UniversalChatRoom.Interfaces;
 using UniversalChatRoom.Data;
 using System.Security.Claims;
 using DeepL;
+using Microsoft.AspNetCore.Authorization;
 
 namespace UniversalChatRoom.Controllers
 {
@@ -42,6 +43,7 @@ namespace UniversalChatRoom.Controllers
             return View();
         }
 
+        [Authorize]
         public IActionResult Public()
         {
             return View((dal.getMessages(null), tt, dal.getUser(GetCurrentUserID()), dal.getProfileFromUser(dal.getUser(GetCurrentUserID()))));
