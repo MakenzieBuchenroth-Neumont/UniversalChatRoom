@@ -39,7 +39,7 @@ else
 			<h4 style="display: inline-block" class="ogLanguage">  Original Language @Model.message.language</h4>
 			</div>
 		<br />
-		<h3>@Model.tt.translateToPassedIn(Model.message.Contents, Model.prof.Language).Result</h3>
+		<h3>@Model.tt.translateToPassedIn(Model.message.Contents, Model.message.language, Model.prof.Language).Result</h3>
 	}
 	else
 	{
