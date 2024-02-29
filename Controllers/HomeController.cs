@@ -54,8 +54,9 @@ namespace UniversalChatRoom.Controllers
             return View(tt);
         }
 
-        public IActionResult Chat(string content)
+        public IActionResult Chat(string? content)
         {
+            if (content == null) return RedirectToAction("Public", "Home");
             //add message to database
             Message m = new Message();
             m.Contents = content;
