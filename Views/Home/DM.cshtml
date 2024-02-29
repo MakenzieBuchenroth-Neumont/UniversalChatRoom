@@ -1,0 +1,17 @@
+﻿@using Microsoft.AspNetCore.Identity
+
+@{
+	ViewData["Title"] = "Direct messaging with " + Model.user.UserName;
+}
+
+@model (IEnumerable<Message> messages, IdentityUser user, Profile prof)
+
+<h1>@Model.user.UserName</h1>
+
+@if(Model.messages.Count() == 0) {
+	<h3>This is the start of your DM history with this user</h3>
+} else {
+	@foreach(Message message in Model.messages) {
+		//
+	}
+}

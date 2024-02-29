@@ -26,11 +26,20 @@ namespace UniversalChatRoom.Data {
 			db.SaveChanges();
 		}
 
-		public Profile getProfile(string id) {
+		public void addChatroomProfile(ChatroomProfile p) {
+			db.ChatroomProfiles.Add(p);
+			db.SaveChanges();
+		}
+
+		public Profile getProfileFromUser(string id) {
 			return db.Profiles.Where(p => p.UserID == id).First();
 		}
 
-        public IdentityUser getUser(string id)
+		public Profile getProfileFromID(int id) {
+			return db.Profiles.Where(p => p.ID == id).First();
+		}
+
+		public IdentityUser getUser(string id)
 		{
 			return db.Users.Where(u => u.Id == id).First();
 		}
@@ -56,9 +65,13 @@ namespace UniversalChatRoom.Data {
 			return (db.Profiles.Where(p => p.UserID == id).FirstOrDefault()) != null;
 		}
 
+		public bool doesChatroomExist(string chatroomName) {
+			return db.Chatrooms.Where(c => c.RoomName == chatroomName) != null;
+		}
+
 		public void setProfileLanguage(string language, string id)
 		{
-			var prof = getProfile(id);
+			var prof = getProfileFromUser(id);
 			prof.Language = language;
 			db.Profiles.Update(prof);
 			db.SaveChanges();
@@ -71,9 +84,10 @@ namespace UniversalChatRoom.Data {
 
 		public IEnumerable<Message> getMessages(Chatroom? chatroom) {
 			if (chatroom == null) {
-				chatroom = db.Chatrooms.First();
+				chatroom = getPublicChatroom();
 			}
-			IEnumerable<ChatroomMessage> messagesinChat = db.ChatroomMessages.Where(m => m.ChatroomID == chatroom.ID ).ToList();
+
+			IEnumerable<ChatroomMessage> messagesinChat = db.ChatroomMessages.Where(m => m.ChatroomID == chatroom.ID).ToList();
 			List<Message> messages = new List<Message>();
 			foreach (ChatroomMessage message in messagesinChat) {
 				messages.Add(db.Messages.Where(m => m.ID == message.MessageID).First());	
@@ -82,7 +96,10 @@ namespace UniversalChatRoom.Data {
 			//sort message by date.
 
 			return messages;
+		}
 
+		public Chatroom getPublicChatroom() {
+			return db.Chatrooms.First();
 		}
 	}
 }

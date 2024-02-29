@@ -5,11 +5,15 @@ namespace UniversalChatRoom.Interfaces {
 	public interface IDataAccessLayer {
 		public void addMessage(Message m);
 
-		public Profile getProfile(string id);
+		public Profile getProfileFromUser(string id);
+
+		public Profile getProfileFromID(int id);
 
 		public IdentityUser getUser(string id);
 
 		public void addChatroomMessage(ChatroomMessage m);
+
+		public void addChatroomProfile(ChatroomProfile p);
 
 		public IEnumerable<Message> getMessages(Chatroom? chatroom);
 
@@ -23,7 +27,11 @@ namespace UniversalChatRoom.Interfaces {
 
 		public bool doesUserHaveProfile(string id);
 
+		public bool doesChatroomExist(string chatroomName);
+
 		public void setProfileLanguage(string language, string id);
+
+		public Chatroom getPublicChatroom();
 	}
 }
 

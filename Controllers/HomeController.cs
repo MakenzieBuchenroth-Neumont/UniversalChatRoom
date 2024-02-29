@@ -7,6 +7,7 @@ using UniversalChatRoom.Data;
 using System.Security.Claims;
 using DeepL;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 
 namespace UniversalChatRoom.Controllers
 {
@@ -54,35 +55,63 @@ namespace UniversalChatRoom.Controllers
             return View(tt);
         }
 
-        public IActionResult Chat(string content)
+        public IActionResult Chat(string content, int chatroomID)
         {
             //add message to database
             Message m = new Message();
             m.Contents = content;
-            m.username = User.FindFirstValue(ClaimTypes.Name);
-            m.language = dal.getProfile(User.FindFirstValue(ClaimTypes.NameIdentifier)).Language;
+            m.username = GetCurrentUserID();
+            m.language = dal.getProfileFromUser(GetCurrentUserID()).Language;
+            dal.addMessage(m);
 
 			ChatroomMessage chatroomMessage = new ChatroomMessage();
-            dal.addMessage(m);
-			chatroomMessage.ChatroomID = 1;
+			chatroomMessage.ChatroomID = chatroomID;
             chatroomMessage.MessageID = m.ID;
             dal.addChatroomMessage(chatroomMessage);
 
-
-
-			return RedirectToAction("Public", "Home");
+            if(chatroomID == dal.getPublicChatroom().ID) {
+    			return RedirectToAction("Public", "Home");
+            } else {
+                TempData["dmID"] = chatroomID;
+                return RedirectToAction("DM", "Home");
+            }
         }
 
-
         public IActionResult SecondRegister() {
-            if(!dal.doesUserHaveProfile(User.FindFirstValue(ClaimTypes.NameIdentifier))) {
+            if(!dal.doesUserHaveProfile(GetCurrentUserID())) {
                 Profile profile = new Profile();
-                profile.UserID = User.FindFirstValue(ClaimTypes.NameIdentifier);
-                profile.Language = LanguageCode.English;
+                profile.UserID = GetCurrentUserID();
+                profile.Language = LanguageCode.EnglishAmerican;
                 dal.addProfile(profile);
+
+                ChatroomProfile chatroomProfile = new ChatroomProfile();
+                chatroomProfile.ChatroomID = dal.getPublicChatroom().ID;
+                chatroomProfile.ProfileID = profile.ID;
+                dal.addChatroomProfile(chatroomProfile);
             }
 
             return View();
+        }
+
+        public IActionResult DM(int? profID) {
+            if(profID == null) {
+                profID = (int) TempData["dmID"];
+            }
+
+            if(!dal.doesChatroomExist(dal.getUser(GetCurrentUserID()).UserName + "-" + dal.getUserFromProfile(dal.getProfileFromID((int) profID)).UserName)) {
+                if(!dal.doesChatroomExist(dal.getUserFromProfile(dal.getProfileFromID((int) profID)).UserName + "-" + dal.getUser(GetCurrentUserID()).UserName)) {
+                    Chatroom dm = new Chatroom();
+                    dm.RoomName = dal.getUser(GetCurrentUserID()).UserName + "-" + dal.getUserFromProfile(dal.getProfileFromID((int) profID)).UserName;
+				}
+            }
+
+            Profile profile = dal.getProfileFromID((int) profID);
+
+            IdentityUser user = dal.getUserFromProfile(profile);
+
+            IEnumerable<Message> messages = new List<Message>(); //dal.getMessages();
+
+            return View((messages, user, profile));
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
