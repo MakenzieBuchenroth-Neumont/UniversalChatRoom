@@ -12,8 +12,8 @@ using UniversalChatRoom.Data;
 namespace UniversalChatRoom.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20240216015600_Initial")]
-    partial class Initial
+    [Migration("20240222014946_initial")]
+    partial class initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -287,12 +287,11 @@ namespace UniversalChatRoom.Migrations
                         .HasMaxLength(250)
                         .HasColumnType("nvarchar(250)");
 
-                    b.Property<int>("ProfileID")
-                        .HasColumnType("int");
+                    b.Property<string>("username")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("ID");
-
-                    b.HasIndex("ProfileID");
 
                     b.ToTable("Messages");
                 });
@@ -407,17 +406,6 @@ namespace UniversalChatRoom.Migrations
                         .IsRequired();
 
                     b.Navigation("Chatroom");
-
-                    b.Navigation("Profile");
-                });
-
-            modelBuilder.Entity("UniversalChatRoom.Models.Message", b =>
-                {
-                    b.HasOne("UniversalChatRoom.Models.Profile", "Profile")
-                        .WithMany()
-                        .HasForeignKey("ProfileID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
 
                     b.Navigation("Profile");
                 });

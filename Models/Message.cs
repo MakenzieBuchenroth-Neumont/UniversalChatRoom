@@ -9,10 +9,9 @@ namespace UniversalChatRoom.Models {
 
 		// This is how you make foreign keys
 		// It is weird, but it works
-		[Required]
-		public int ProfileID {get; set;}
-		[Required]
-		public virtual Profile Profile {get; set;}
+		
+		[Required] public string username {get; set;}
+		[Required] public string language {get; set;}
 
 		[MaxLength(250), Required]
 		public string Contents {get; set;}

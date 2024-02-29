@@ -14,7 +14,7 @@
 		<header>
 			<nav class="navbar navbar-expand-lg navbar-toggleable-sm navbar-light bg-primary border-bottom box-shadow mb-3">
 				<div class="container-fluid">
-					<a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Public">Universal Chatroom</a>
+					<a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">Universal Chatroom</a>
 					<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
 							aria-expanded="false" aria-label="Toggle navigation">
 						<span class="navbar-toggler-icon"></span>
@@ -37,7 +37,7 @@
 				</div>
 			</nav>
 		</header>
-		<div id="mySidenav" class="sidenav">
+		<div id="mySidenav" class="sidenav text-light">
 			<a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
 			<!-- Dark/Light mode switcher -->
 			<ul>
@@ -60,8 +60,35 @@
 				<li>
 					<form action="@Url.Action("Language", "Home")" method="post" id="languageForm">
 						<select id="languageDropdown" name="language">
-							<option value="en">English</option>
+							<option value="bg">Bulgarian</option>
+							<option value="zh">Chinese</option>
+							<option value="cs">Czech</option>
+							<option value="da">Danish</option>
+							<option value="nl">Dutch</option>
+							<option selected value="en">English</option>
+							<option value="et">Estonian</option>
+							<option value="fi">Finnish</option>
 							<option value="fr">French</option>
+							<option value="de">German</option>
+							<option value="el">Greek</option>
+							<option value="hu">Hungarian</option>
+							<option value="id">Indonesian</option>
+							<option value="it">Italian</option>
+							<option value="ja">Japanese</option>
+							<option value="ko">Korean</option>
+							<option value="lv">Latvian</option>
+							<option value="lt">Lithuanian</option>
+							<option value="nb">Norwegian</option>
+							<option value="pl">Polish</option>
+							<option value="pt">Portuguese</option>
+							<option value="ro">Romanian</option>
+							<option value="ru">Russian</option>
+							<option value="sk">Slovak</option>
+							<option value="sl">Slovenian</option>
+							<option value="es">Spanish</option>
+							<option value="sv">Swedish</option>
+							<option value="tr">Turkish</option>
+							<option value="uk">Ukrainian</option>
 							<!-- Add more language options as needed -->
 						</select>
 						<input type="submit" value="Change Language">

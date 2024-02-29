@@ -5,6 +5,8 @@ using UniversalChatRoom.Models;
 using UniversalChatRoom.Interfaces;
 using UniversalChatRoom.Data;
 using System.Security.Claims;
+using DeepL;
+using Microsoft.AspNetCore.Authorization;
 
 namespace UniversalChatRoom.Controllers
 {
@@ -41,9 +43,10 @@ namespace UniversalChatRoom.Controllers
             return View();
         }
 
+        [Authorize]
         public IActionResult Public()
         {
-            return View(Tuple.Create(dal.getMessages(null), tt, dal.getUser(User.FindFirstValue(ClaimTypes.NameIdentifier))));
+            return View((dal.getMessages(null), tt, dal.getUser(GetCurrentUserID()), dal.getProfileFromUser(dal.getUser(GetCurrentUserID()))));
         }
 
         public IActionResult Test()
@@ -56,8 +59,10 @@ namespace UniversalChatRoom.Controllers
             //add message to database
             Message m = new Message();
             m.Contents = content;
-            m.ProfileID = dal.getProfile(User.FindFirstValue(ClaimTypes.NameIdentifier)).ID;
-            ChatroomMessage chatroomMessage = new ChatroomMessage();
+            m.username = User.FindFirstValue(ClaimTypes.Name);
+            m.language = dal.getProfile(User.FindFirstValue(ClaimTypes.NameIdentifier)).Language;
+
+			ChatroomMessage chatroomMessage = new ChatroomMessage();
             dal.addMessage(m);
 			chatroomMessage.ChatroomID = 1;
             chatroomMessage.MessageID = m.ID;
@@ -68,10 +73,26 @@ namespace UniversalChatRoom.Controllers
 			return RedirectToAction("Public", "Home");
         }
 
+
+        public IActionResult SecondRegister() {
+            if(!dal.doesUserHaveProfile(User.FindFirstValue(ClaimTypes.NameIdentifier))) {
+                Profile profile = new Profile();
+                profile.UserID = User.FindFirstValue(ClaimTypes.NameIdentifier);
+                profile.Language = LanguageCode.English;
+                dal.addProfile(profile);
+            }
+
+            return View();
+        }
+
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
+
+        private string GetCurrentUserID() {
+            return User.FindFirstValue(ClaimTypes.NameIdentifier);
+		}
     }
 }
