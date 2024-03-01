@@ -9,11 +9,6 @@ namespace UniversalChatRoom.Data {
 
 		public PublicDal(ApplicationDbContext indb) {
 			db = indb;
-
-			//Chatroom chat = new Chatroom();
-			//chat.RoomName = "Public";
-			//db.Chatrooms.Add(chat);
-			//db.SaveChanges();
 		}
 
 		public void addMessage(Message m) {
@@ -105,7 +100,16 @@ namespace UniversalChatRoom.Data {
 		}
 
 		public Chatroom getPublicChatroom() {
-			return db.Chatrooms.First();
+			Chatroom? chat = db.Chatrooms.Where(c => c.RoomName == "Public").FirstOrDefault();
+
+			if(chat == null) {
+				chat = new Chatroom();
+				chat.RoomName = "Public";
+				db.Chatrooms.Add(chat);
+				db.SaveChanges();
+			}
+
+			return chat;
 		}
 
 		public Chatroom getChatroomFromName(string roomName) {
