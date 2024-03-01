@@ -25,6 +25,8 @@ namespace UniversalChatRoom.Interfaces {
 
 		public Profile getProfileFromUser(IdentityUser user);
 
+		public Profile getProfileFromUserName(string userName);
+
 		public bool doesUserHaveProfile(string id);
 
 		public bool doesChatroomExist(string chatroomName);
@@ -32,6 +34,12 @@ namespace UniversalChatRoom.Interfaces {
 		public void setProfileLanguage(string language, string id);
 
 		public Chatroom getPublicChatroom();
+
+		public Chatroom getChatroomFromName(string roomName);
+
+		public Chatroom getChatroomFromID(int id);
+
+		public IEnumerable<Profile> getProfilesInChatroom(int chatroomId);
 	}
 }
 

@@ -20,7 +20,7 @@ else
 			} else {
 				@* <h3 style="float: left"><a asp-controller="Home" asp-action="DM">@Model.message.username</a></h3> *@
 				<form asp-controller="Home" asp-action="DM" method="post">
-					<input hidden name="profID" type="number" value="@Model.prof.ID" />
+					<input hidden name="username" type="text" value="@Model.message.username" />
 					<button type="submit" class="">@Model.message.username</button>
 				</form>
 			}

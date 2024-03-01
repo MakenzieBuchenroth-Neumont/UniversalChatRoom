@@ -66,7 +66,7 @@ namespace UniversalChatRoom.Data {
 		}
 
 		public bool doesChatroomExist(string chatroomName) {
-			return db.Chatrooms.Where(c => c.RoomName == chatroomName) != null;
+			return db.Chatrooms.Where(c => c.RoomName == chatroomName).FirstOrDefault() != null;
 		}
 
 		public void setProfileLanguage(string language, string id)
@@ -75,6 +75,12 @@ namespace UniversalChatRoom.Data {
 			prof.Language = language;
 			db.Profiles.Update(prof);
 			db.SaveChanges();
+		}
+
+		public Profile getProfileFromUserName(string userName) {
+			IdentityUser user = db.Users.Where(u => u.UserName == userName).First();
+
+			return getProfileFromUser(user.Id);
 		}
 
 		public void addChatRoom(Chatroom chatroom) {
@@ -100,6 +106,26 @@ namespace UniversalChatRoom.Data {
 
 		public Chatroom getPublicChatroom() {
 			return db.Chatrooms.First();
+		}
+
+		public Chatroom getChatroomFromName(string roomName) {
+			return db.Chatrooms.Where(c => c.RoomName == roomName).First();
+		}
+
+		public Chatroom getChatroomFromID(int id) {
+			return db.Chatrooms.Where(c => c.ID == id).First();
+		}
+
+		public IEnumerable<Profile> getProfilesInChatroom(int chatroomId) {
+			IEnumerable<ChatroomProfile> chatroomProfiles = db.ChatroomProfiles.Where(c => c.ChatroomID == chatroomId).ToList();
+
+			List<Profile> profiles = new List<Profile>();
+
+			foreach(ChatroomProfile chatroomProfile in chatroomProfiles) {
+				profiles.Add(db.Profiles.Where(p => p.ID == chatroomProfile.ProfileID).First());
+			}
+
+			return profiles;
 		}
 	}
 }
