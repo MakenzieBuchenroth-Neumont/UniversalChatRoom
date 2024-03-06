@@ -38,7 +38,7 @@ else
 					<button type="submit" class="">@Model.message.username</button>
 				</form>
 			}
-			<h4 style="display: inline-block" class="ogLanguage">  Original Language @Model.message.language</h4>
+				<h4 style="display: inline-block" class="ogLanguage">  @Model.tt.translateToPassedIn("Original Language", "en-US", Model.prof.Language).Result @Model.message.language</h4>
 			</div>
 		<br />
 		<h3>@Model.tt.translateToPassedIn(Model.message.Contents, Model.message.language, Model.prof.Language).Result</h3>
