@@ -27,12 +27,14 @@ else
     }
 	if (Model.tt != null)
 	{
-		<div style="clear: both">
+		<div class="border border-5 border-primary rounded">
+			<div class="mx-3" style="clear: both">
 			@if(Model.message.username == Model.user.UserName) {
 				<h3 style="float: left">@Model.message.username</h3>
 			} else {
 				@* <h3 style="float: left"><a asp-controller="Home" asp-action="DM">@Model.message.username</a></h3> *@
 				<form asp-controller="Home" asp-action="DM" method="post">
+					<input hidden name="username" type="text" value="@Model.message.username" />
 					<button type="submit" class="">@Model.message.username</button>
 				</form>
 			}
@@ -40,6 +42,7 @@ else
 			</div>
 		<br />
 		<h3>@Model.tt.translateToPassedIn(Model.message.Contents, Model.message.language, Model.prof.Language).Result</h3>
+		</div>
 	}
 	else
 	{

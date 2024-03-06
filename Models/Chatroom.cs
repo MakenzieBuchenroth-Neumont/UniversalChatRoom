@@ -5,7 +5,7 @@ namespace UniversalChatRoom.Models {
 		[Key]
 		public int ID {get; set;}
 
-		[MaxLength(25), Required]
+		[MaxLength(100), Required]
 		public string RoomName {get; set;}
 	}
 }

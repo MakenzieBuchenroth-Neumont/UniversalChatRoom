@@ -1,0 +1,30 @@
+﻿@using Microsoft.AspNetCore.Identity
+
+@{
+	ViewData["Title"] = "Direct messaging"; // with " + Model.user.UserName;
+}
+
+@model (IEnumerable<Message> messages, TextTranslator tt, IdentityUser user, Profile prof, int chatroomID)
+
+@* <h1 class="text-center">@Model.user.UserName</h1> *@
+
+@if(Model.messages.Count() == 0) {
+	<h3 class="text-center">This is the start of your DM history with this user</h3>
+} else {
+	<div class="overflow-scroll vh-75">
+		<div class="row">
+			@foreach(Message message in Model.messages) {
+				var value = (message, Model.tt, Model.user, Model.prof);
+				<div class="col-12">
+					<partial name="_partialMessageView.cshtml" for="@value" />
+				</div>
+			}
+		</div>
+	</div>
+}
+
+<form class="d-flex" asp-controller="Home" asp-action="Chat">
+	<input name="content" class="form-control" type="search" placeholder="type to chat" />
+	<input hidden name="chatroomID" type="number" value="@Model.chatroomID" />
+	<button class="btn btn-secondary col-2" type="submit">Chat</button>
+</form>
