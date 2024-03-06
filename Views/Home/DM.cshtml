@@ -4,9 +4,9 @@
 	ViewData["Title"] = "Direct messaging"; // with " + Model.user.UserName;
 }
 
-@model (IEnumerable<Message> messages, TextTranslator tt, IdentityUser user, Profile prof, int chatroomID)
+@model (IEnumerable<Message> messages, TextTranslator tt, IdentityUser user, Profile prof, int chatroomID, string chatroomName)
 
-@* <h1 class="text-center">@Model.user.UserName</h1> *@
+<h1 class="text-center">@Model.chatroomName</h1>
 
 @if(Model.messages.Count() == 0) {
 	<h3 class="text-center">This is the start of your DM history with this user</h3>
