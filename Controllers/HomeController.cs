@@ -32,7 +32,7 @@ namespace UniversalChatRoom.Controllers
 			//ViewBag.selectedLanguage = language;
 			dal.setProfileLanguage(language, User.FindFirstValue(ClaimTypes.NameIdentifier));
 			return RedirectToAction("Public");
-		}
+        }
 
 		public IActionResult Index()
 		{
