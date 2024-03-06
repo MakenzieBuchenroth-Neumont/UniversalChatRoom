@@ -57,8 +57,8 @@ namespace UniversalChatRoom.Controllers
 
 		public IActionResult Chat(string content, int chatroomID)
 		{
-			//add message to database
-			Message m = new Message();
+            //add message to database
+            Message m = new Message();
 			m.Contents = content;
 			m.username = dal.getUser(GetCurrentUserID()).UserName;
 			m.language = dal.getProfileFromUser(GetCurrentUserID()).Language;

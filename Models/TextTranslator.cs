@@ -31,7 +31,7 @@ namespace UniversalChatRoom.Models
 			if (string.IsNullOrEmpty(text)) return "";
 			if (string.IsNullOrEmpty(languageCode)) return "";
 			if (!string.IsNullOrEmpty(sourceCode)) sourceCode = LanguageCode.RemoveRegionalVariant(sourceCode);
-			//if (sourceCode == "en-US" || sourceCode == "us-GB") sourceCode = "en";
+			//if (sourceCode == "en-US" || sourceCode == "en-GB") sourceCode = "en";
 
 
 			// try catch because that means it will catch if the language passed in isn't correct, returns the original text if language dont work
