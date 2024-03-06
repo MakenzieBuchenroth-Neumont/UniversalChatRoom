@@ -32,7 +32,7 @@ builder.Services.Configure<IdentityOptions>(options => {
 	options.Lockout.AllowedForNewUsers = false;
 
 	// User
-	options.User.AllowedUserNameCharacters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-._";
+	options.User.AllowedUserNameCharacters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-._@";
 	options.User.RequireUniqueEmail = true;
 	options.SignIn.RequireConfirmedAccount = false;
 	options.SignIn.RequireConfirmedEmail = false;
