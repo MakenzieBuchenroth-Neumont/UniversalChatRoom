@@ -17,6 +17,28 @@ builder.Services.AddControllersWithViews();
 
 builder.Services.AddTransient<IDataAccessLayer, PublicDal>();
 
+builder.Services.Configure<IdentityOptions>(options => {
+	// Password settings
+	options.Password.RequireDigit = false;
+	options.Password.RequireLowercase = false;
+	options.Password.RequireUppercase = false;
+	options.Password.RequiredLength = 1;
+	options.Password.RequiredUniqueChars = 0;
+	options.Password.RequireNonAlphanumeric = false;
+
+	// Lockout
+	options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(5);
+	options.Lockout.MaxFailedAccessAttempts = 5;
+	options.Lockout.AllowedForNewUsers = false;
+
+	// User
+	options.User.AllowedUserNameCharacters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-._@";
+	options.User.RequireUniqueEmail = true;
+	options.SignIn.RequireConfirmedAccount = false;
+	options.SignIn.RequireConfirmedEmail = false;
+	options.SignIn.RequireConfirmedPhoneNumber = false;
+});
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

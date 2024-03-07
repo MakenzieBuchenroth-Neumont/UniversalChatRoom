@@ -116,7 +116,7 @@ namespace UniversalChatRoom.Controllers
 
 				IEnumerable<Message> messages = dal.getMessages(dm);
 
-				return View((messages, tt, user, profile, chatroomID));
+				return View((messages, tt, user, profile, chatroomID, dm.RoomName));
 			} else {
 				int profID = dal.getProfileFromUserName(username).ID;
 
@@ -153,7 +153,7 @@ namespace UniversalChatRoom.Controllers
 
 				IEnumerable<Message> messages = dal.getMessages(dm);
 
-				return View((messages, tt, user, profile, dm.ID));
+				return View((messages, tt, user, profile, dm.ID, dm.RoomName));
 			}
 		}
 
