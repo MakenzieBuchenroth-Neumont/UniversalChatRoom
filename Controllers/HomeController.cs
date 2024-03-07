@@ -36,8 +36,19 @@ namespace UniversalChatRoom.Controllers
 
 		public IActionResult Index()
 		{
-			return View();
+			if(GetCurrentUserID() == null)
+			{
+				return View();
+			} else
+			{
+				return View((tt, dal.getProfileFromUser(dal.getUser(GetCurrentUserID()))));
+			}
 		}
+		
+		//public IActionResult Index()
+		//{
+		//	return View();
+		//}
 
 		public IActionResult Privacy()
 		{
